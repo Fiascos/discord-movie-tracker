@@ -1,4 +1,3 @@
-```markdown
 # 🎬 Kinota: Discord Movie Tracker
 
 <p align="center">
@@ -39,5 +38,3 @@
 ## 🛡️ Security
 **Never publish your keys!** Make sure your `.gitignore` contains:
 `credentials.json`, `.env`, `build/`.
-
-```
