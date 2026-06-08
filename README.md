@@ -1,3 +1,6 @@
+Ось англійська версія вашого файлу `README.md` із повним збереженням структури, бейджів та Markdown-форматування:
+
+```markdown
 # 🎬 Kinota: Discord Movie Tracker
 
 <p align="center">
@@ -9,32 +12,34 @@
 
 ---
 
-## 🌟 Про проєкт
-**Kinota** — це інтелектуальний помічник для кіноманів у Discord. Бот автоматизує процес ведення списку переглянутих фільмів прямо у Google Таблиці.
+## 🌟 About the Project
+**Kinota** is an intelligent assistant for movie buffs on Discord. The bot automates the process of keeping track of watched movies directly within Google Sheets.
 
-### ✨ Функції:
-* **Smart Counting:** Автоматичне оновлення лічильника переглядів ($n+1$).
-* **Embed Reports:** Гарні звіти про історію переглядів у чаті.
-* **Statistics:** Середній рейтинг та загальна кількість фільмів.
-
----
-
-## ⌨️ Команди бота
-* `/add [title] [year] [rating] [date]` — Додати фільм.
-* `/history` — Список останніх 5 переглядів.
-* `/stats` — Ваша статистика.
-* `/delete` — Видалити останній запис.
+### ✨ Features:
+* **Smart Counting:** Automatic update of the view counter ($n+1$).
+* **Embed Reports:** Beautiful reports of viewing history right in the chat.
+* **Statistics:** Average rating and total number of movies.
 
 ---
 
-## 🚀 Швидкий старт
-1. Додайте `credentials.json` від Google Cloud у корінь.
-2. Налаштуйте токен у файлі `.env`.
-3. Зберіть проєкт: `./gradlew build`.
-4. Запустіть: `java -jar build/libs/kinota-all.jar`.
+## ⌨️ Bot Commands
+* `/add [title] [year] [rating] [date]` — Add a movie.
+* `/history` — List of the last 5 watched movies.
+* `/stats` — Your statistics.
+* `/delete` — Delete the most recent entry.
 
 ---
 
-## 🛡️ Безпека
-**Ніколи не публікуйте ключі!** Переконайтеся, що `.gitignore` містить:
+## 🚀 Quick Start
+1. Add your Google Cloud `credentials.json` to the root directory.
+2. Set up your token in the `.env` file.
+3. Build the project: `./gradlew build`.
+4. Run it: `java -jar build/libs/kinota-all.jar`.
+
+---
+
+## 🛡️ Security
+**Never publish your keys!** Make sure your `.gitignore` contains:
 `credentials.json`, `.env`, `build/`.
+
+```

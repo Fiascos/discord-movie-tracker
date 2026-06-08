@@ -1,76 +1,45 @@
-# Вичерпний контекст проєкту: Kinota Discord Bot
+#### **1. Project Overview**
+**Kinota** is a Discord bot developed in **Java 21**, designed to automate movie tracking for a community. The bot processes Discord **Slash Commands** and synchronizes data (additions, deletions, statistics, and history) with a **Google Sheet** in real-time.
 
-## 1. Загальний опис проєкту
-Kinota — это Discord-бот на мові Java, створений для автоматизації обліку та трекінгу переглянутих фільмів у спільноті. Бот обробляє Slash-команди користувачів у Discord та синхронізує дані (додавання, видалення, статистика, історія) з Google Таблицею в режимі реального часу.
+#### **2. Technology Stack**
+*   **Language:** Java 21 (OpenJDK 21.0.x).
+*   **Build System:** Gradle 8.14.4.
+*   **Structure:** Multi-module project; the core logic resides in the **app** module.
+*   **Dependencies:**
+    *   `net.dv8tion:JDA`: Discord API interaction (Gateway, Events, Slash Commands).
+    *   `com.google.api-client`: Integration with Google Sheets & Drive API v3.
+    *   `io.github.cdimascio:dotenv-java`: Configuration management via `.env` files.
 
-## 2. Технологічний стек та Архітектура
-- **Мова:** Java 21 (OpenJDK 21.0.x)
-- **Система збирання:** Gradle 8.14.4
-- **Структура проєкту:** Багатомодульна. Основний робочий модуль: `app`.
-- **Головні залежності:**
-  - `net.dv8tion:JDA` — взаємодія з Discord API (Gateway, події, Slash-команди).
-  - `com.google.api-client:google-api-client` (Sheets & Drive v3) — інтеграція з Google Cloud.
-  - `io.github.cdimascio:dotenv-java` — менеджмент конфігурацій через `.env`.
+#### **3. Source Code Structure**
+All Java classes are located in the `com.kinota` package under `app/src/main/java/com/kinota/`:
+1.  **App.java:** Entry point; initializes Dotenv, services, and the JDA instance.
+2.  **CommandListener.java:** Event listener that intercepts `onSlashCommandInteraction` and triggers business logic.
+3.  **GoogleSheetsService.java:** Service class handling read/write/delete operations via Google Sheets API.
 
----
+#### **4. Database Schema (Google Sheets)**
+The bot uses a Google Sheet named **"Аркуш1"** (referenced as `Аркуш1!A:E` in range queries).
+*   **Column A:** Movie Title (String).
+*   **Column B:** Release Year (Integer/String).
+*   **Column C:** Rating (Double/String).
+*   **Column D:** Watch Date (Date/String).
+*   **Column E:** Watch Count (Integer).
 
-## 3. Локація та Структура вихідного коду (Java)
-Всі Java-класи проєкту знаходяться в одному пакеті `com.kinota` за шляхом:
-`app/src/main/java/com/kinota/`
+#### **5. Command List**
+*   **/add:** Adds a new movie to the end of the sheet.
+*   **/stats:** Displays community viewing analytics and average ratings.
+*   **/history:** Lists the last 5 watched movies in a Discord Embed.
+*   **/delete:** Removes the last entry or a specific movie from the sheet.
+*   **/help:** Provides instructions and a list of available commands.
 
-### Файлова структура коду:
-1. `App.java` — Головний клас (точка входу `main`). Ініціалізує `Dotenv`, підключає сервіси та запускає `JDABuilder`.
-2. `CommandListener.java` — Єдиний слухач подій (розширює `ListenerAdapter`). Перехоплює `onSlashCommandInteraction` та викликає відповідну бізнес-логіку для кожної команди.
-3. `GoogleSheetsService.java` — Сервісний клас, який містить усі методи для безпосередньої роботи з Google Sheets API (читання, запис, видалення рядків).
+#### **6. Production Infrastructure (Oracle Cloud)**
+The bot is deployed on an **Ubuntu VM** within **Oracle Cloud Infrastructure (OCI)**.
+*   **User:** `ubuntu`.
+*   **Working Directory:** `/home/ubuntu/kinota-bot/`.
+*   **Executable:** `/home/ubuntu/kinota-bot/app/build/libs/app.jar`.
+*   **Secrets:** `.env` and `credentials.json` are stored in the root directory and excluded via `.gitignore`.
 
----
-
-## 4. Схема Бази Даних (Структура Google Sheets)
-Бот використовує Google Таблицю як реляційну БД. 
-- **Назва вкладки (аркуша):** `Аркуш1` (завжди вказувати у Range запитах, наприклад: `Аркуш1!A:E`).
-- **Структура стовпчиків:**
-  - **Стовпчик A (A:A):** Назва фільму (String)
-  - **Стовпчик B (B:B):** Рік прем'єри (Integer / String)
-  - **Стовпчик C (C:C):** Оцінка (Double / String)
-  - **Стовпчик D (D:D):** Дата перегляду (Date / String)
-  - **Стовпчик E (E:E):** Кількість переглядів (Integer)
-
----
-
-## 5. Поточний функціонал та Список команд
-Бот взаємодіє з користувачами виключно через глобальні Slash-команди Discord:
-- `/add` — Додає новий фільм у таблицю «Аркуш1» (заповнює назву, рік тощо в кінець таблиці).
-- `/stats` — Зчитує дані з таблиці та виводить аналітику/статистику переглядів спільноти.
-- `/history` — Виводить список останніх переглянутих фільмів із таблиці.
-- `/delete` — Видаляє фільм із таблиці «Аркуш1» за назвою або іншим критерієм.
-- `/help` — Виводить список доступних команд та інструкцію користувача.
-
----
-
-## 6. Інфраструктура продакшну (Oracle Cloud)
-Проєкт розгорнуто на Ubuntu VM у хмарі Oracle Cloud Infrastructure (OCI).
-- **Користувач:** `ubuntu`
-- **Робоча директорія на сервере:** `/home/ubuntu/kinota-bot/`
-- **Виконуваний файл:** `/home/ubuntu/kinota-bot/app/build/libs/app.jar`
-
-### Секрети та конфігурація:
-У корені `/home/ubuntu/kinota-bot/` створено файли (додані в `.gitignore`):
-1. `.env` із конфігами:
-   - `GOOGLE_CREDENTIALS_PATH=./credentials.json`
-   - `DISCORD_TOKEN=...`
-   - `SPREADSHEET_ID=...`
-2. `credentials.json` — сервісний акаунт Google Cloud.
-
-### Системні команди (Шпаргалка для ШІ):
-- Збирання проєкту: `./gradlew shadowJar` (генерує `app.jar`).
-- Запуск у фоні через `screen`: `screen -r kinotabot` (підключення), `java -jar app/build/libs/app.jar` (старт).
-- Згортання екрана: `Ctrl + A`, потім `D`.
-
----
-
-## 7. Правила розробки та генерації коду для ШІ
-1. **Безпека понад усе:** Ніколи не хардкодити токени. Зчитувати конфіги тільки через клас `Dotenv`.
-2. **Асинхронність Discord:** Запити до Google Sheets можуть тривати більше 3 секунд. Для запобігання таймаутів Discord завжди викликай `event.deferReply()` на початку важких команд у `CommandListener.java`.
-3. **Обробка винятків (Fault Tolerance):** Усі методи в `GoogleSheetsService.java` та виклики в слухачі мають бути захищені блоками `try-catch`. Якщо Google API повертає помилку, бот повинен коректно повідомити користувача, а не падати.
-4. **Стиль Java 21:** Пиши чистий код, використовуй сучасні конструкції Java (Records, Pattern Matching), де це доречно.
-5. **Головна життєва база:** Любіть маму і мийте руки з милом. (Критично важливо для ментального здоров'я розробника та чистоти клавіатури).
+#### **7. AI Development Rules**
+1.  **Security:** Never hardcode tokens; always use `Dotenv`.
+2.  **Asynchronicity:** Always use `event.deferReply()` for Google Sheets operations to prevent Discord timeouts.
+3.  **Fault Tolerance:** Use `try-catch` blocks for all API calls to ensure the bot informs the user of errors instead of crashing.
+4.  **Java 21 Style:** Use modern constructs like Records and Pattern Matching where appropriate.
