@@ -1,5 +1,3 @@
-Ось англійська версія вашого файлу `README.md` із повним збереженням структури, бейджів та Markdown-форматування:
-
 ```markdown
 # 🎬 Kinota: Discord Movie Tracker
 
